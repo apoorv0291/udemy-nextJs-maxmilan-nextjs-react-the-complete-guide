@@ -1,0 +1,66 @@
+import React, { useRef } from 'react';
+import Card from '../Base/Card';
+import classes from './NewMeetupForm.module.css';
+
+export default function NewMeetupForm(props) {
+    const titleInputRef = useRef();
+    const imageInputRef = useRef();
+    const addressInputRef = useRef();
+    const descriptionInputRef = useRef();
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Handle submit');
+        const enteredTitle = titleInputRef.current.value;
+        const enteredImage = imageInputRef.current.value;
+        const enteredAddress = addressInputRef.current.value;
+        const enteredDescription = descriptionInputRef.current.value;
+        const meetupData = {
+            title: enteredTitle,
+            address: enteredAddress,
+            description: enteredDescription,
+            image: enteredImage,
+        };
+        console.log('MEetup data', meetupData);
+        props.onAddMeetup(meetupData);
+    };
+    return (
+        <Card>
+            <form className={classes.form} onSubmit={handleSubmit}>
+                <div className={classes.control}>
+                    <label htmlFor="title">Meetup title</label>
+                    <input
+                        type="text"
+                        required
+                        id="title"
+                        ref={titleInputRef}
+                    />
+                </div>
+                <div className={classes.control}>
+                    <label htmlFor="image">Meetup Image</label>
+                    <input type="url" required id="image" ref={imageInputRef} />
+                </div>
+                <div className={classes.control}>
+                    <label htmlFor="address">Meetup address</label>
+                    <input
+                        type="text"
+                        required
+                        id="address"
+                        ref={addressInputRef}
+                    />
+                </div>
+                <div className={classes.control}>
+                    <label htmlFor="descriptiom">Meetup desc</label>
+                    <textarea
+                        rows="5"
+                        required
+                        id="descriptiom"
+                        ref={descriptionInputRef}
+                    />
+                </div>
+                <div className={classes.actions}>
+                    <button> Add meetup</button>
+                </div>
+            </form>
+        </Card>
+    );
+}
